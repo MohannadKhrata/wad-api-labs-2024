@@ -5,6 +5,7 @@ import express from 'express';
 import cors from 'cors';
 import tasksRouter from './api/tasks/index.js';
 import usersRouter from './api/users/index.js';
+import authenticate from './authenticate/index.js';
 
 dotenv.config();
 
@@ -24,7 +25,9 @@ const port = process.env.PORT;
 app.use(cors());
 
 app.use(express.json());
-app.use('/api/tasks', tasksRouter);
+
+// Tasks router (protected)
+app.use('/api/tasks', authenticate, tasksRouter);
 
 // Users router
 app.use('/api/users', usersRouter);
