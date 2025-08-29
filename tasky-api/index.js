@@ -2,7 +2,9 @@ import './db/index.js';
 
 import dotenv from 'dotenv';
 import express from 'express';
+import cors from 'cors';
 import tasksRouter from './api/tasks/index.js';
+import usersRouter from './api/users/index.js';
 
 dotenv.config();
 
@@ -18,8 +20,14 @@ const errHandler = (err, req, res, next) => {
 const app = express();
 const port = process.env.PORT;
 
+// Enable CORS for all requests
+app.use(cors());
+
 app.use(express.json());
 app.use('/api/tasks', tasksRouter);
+
+// Users router
+app.use('/api/users', usersRouter);
 
 // 👇 must be after all routes/middleware
 app.use(errHandler);
